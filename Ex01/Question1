@@ -1,1 +1,38 @@
+#include <cstdio>
+#include <cmath>
+#include <cstdint>  
 
+// Function to check if a number is prime
+bool isPrime(uint64_t x) {
+    if (x < 2) return false;       
+    if (x == 2) return true;       
+    if (x % 2 == 0) return false;  
+
+    // Only check divisors up to sqrt(x)
+    uint64_t limit = (uint64_t)std::sqrt((long double)x);
+    for (uint64_t i = 3; i <= limit; i += 2) {
+        if (x % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+//test
+
+int main() {
+    uint64_t tests[] = {0, 1, 2, 3, 4, 5, 17, 18, 19, 97, 100, 45775815757}; 
+
+    int numTests = sizeof(tests) / sizeof(tests[0]);
+
+    for (int i = 0; i < numTests; i++) {
+        uint64_t n = tests[i];
+        if (isPrime(n)) {
+            printf("%llu is prime\n", (unsigned long long)n);
+        } else {
+            printf("%llu is not prime\n", (unsigned long long)n);
+        }
+    }
+
+    return 0;
+}
