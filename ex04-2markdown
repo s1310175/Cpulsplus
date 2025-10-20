@@ -1,0 +1,23 @@
+Verification of Compile-Time Evaluation
+
+The most definitive way to verify that a constexpr function is 
+successfully evaluated at compile-time is to use its result in a 
+context that strictly requires a compile-time constant. If the expression 
+is not resolved by the compiler, the code will fail to compile.
+
+Verification Technique: static_assert
+
+The modern C++ standard provides the most explicit verification tool: static_assert.
+
+static_assert checks a condition during compilation. Crucially, the 
+condition must be a constant expression, ensuring that the function call
+(e.g., cube(2)) is evaluated before the program execution phase.
+
+// Example:
+static_assert(cube(2) == 8, "Compile-time evaluation failed for cube(2)");
+
+The expression cube(2) == 8 inside the static_assert call must resolve to a 
+boolean constant during compilation. If cube(2) were not a constant expression, 
+the compiler would issue an error because static_assert requires its condition 
+to be calculable solely from the source code. The successful compilation confirms 
+the compile-time evaluation.
